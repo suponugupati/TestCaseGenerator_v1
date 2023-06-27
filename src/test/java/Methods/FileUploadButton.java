@@ -1,4 +1,4 @@
-package Generator;
+package Methods;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,8 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import static Methods.UserStoryParser.parseUserStory;
+
 public class FileUploadButton {
-    public static void main(String[] args) {
+    public void openFileUploadWindow(UserStoryLoadedCallback callback) {
+        // Declare an array to store the selected file path
+
         JFrame frame = new JFrame("File Upload ");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new FlowLayout());
@@ -35,6 +39,12 @@ public class FileUploadButton {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                     // Perform file upload or further processing here
+                    parseUserStory(selectedFile.getAbsolutePath());
+                    // Call the callback method to indicate that the user story is loaded
+                    callback.onUserStoryLoaded();
+                    // Close the window after uploading the file
+                    frame.dispose();
+
                 }
             }
         });
